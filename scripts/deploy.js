@@ -14,12 +14,12 @@ async function main() {
   // await hre.run('compile');
 
   // We get the contract to deploy
-  const GreedyGeese = await hre.ethers.getContractFactory("GreedyGeese");
-  const greedygeese = await GreedyGeese.deploy("Greedy Geese", "GG", "ipfs://QmdVvGJhRneQTNvsMDpC5BpCkcXgtHxWgycqxZy9QjVKNv/");
+  const STC = await hre.ethers.getContractFactory("STC");
+  const stc = await STC.deploy("Second Thoughts Club", "STC", "ipfs://QmRxGgAweLite1XsVCmE5jqkA6GAEH6Lsip28syn1Quj2S/");
 
-  await greedygeese.deployed();
+  await stc.deployed();
 
-  console.log("greedygeese deployed to:", greedygeese.address);
+  console.log("stc deployed to:", stc.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
