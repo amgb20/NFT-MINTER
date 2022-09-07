@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
-import GreedyGeese from './artifacts/contracts/GreedyGeese.sol/GreedyGeese.json';
+import GreedyGeese from './artifacts/contracts/SecondThoughtsClub.sol/STC.json';
 import './App.css';
 import img1 from './img/1.png';
 import img2 from './img/2.png';
@@ -13,7 +13,7 @@ import img8 from './img/8.png';
 import img9 from './img/9.png';
 import img10 from './img/10.png';
 
-const GGaddress = "0x9486491583F0ebf28239b3013f7c35b7b50E65f4";
+const STCaddress = "0x7536868cdc4e46c460fe00ea11fc1be083417f13";
 
 function App() {
 
@@ -27,7 +27,7 @@ function App() {
   async function fetchData() {
     if(typeof window.ethereum !== 'undefined') {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const contract = new ethers.Contract(GGaddress, GreedyGeese.abi, provider);
+      const contract = new ethers.Contract(STCaddress, GreedyGeese.abi, provider);
       try {
         const cost = await contract.cost();
         const totalSupply = await contract.totalSupply();
@@ -45,7 +45,7 @@ function App() {
       let accounts = await window.ethereum.request({method: 'eth_requestAccounts'});
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
-      const contract = new ethers.Contract(GGaddress, GreedyGeese.abi, signer);
+      const contract = new ethers.Contract(STCaddress, GreedyGeese.abi, signer);
       try {
         let overrides = {
           from: accounts[0],
@@ -77,10 +77,10 @@ function App() {
           <img src={img10} alt="img" />
         </div>
         {error && <p>{error}</p>}
-        <h1>Mint a Greedy Geese NFT !</h1>
+        <h1>Mint a STC NFT !</h1>
         <p className="count">{data.totalSupply} / 50</p>
-        <p className="cost">Each Greedy Geese NFT costs {data.cost / 10**18} eth (excluding gas fees)</p>
-        <button onClick={mint}>BUY one Greedy Geese NFT</button>
+        <p className="cost">Each STC NFT costs {data.cost / 10**18} eth (excluding gas fees)</p>
+        <button onClick={mint}>BUY one STC NFT</button>
       </div>
     </div>
   );
