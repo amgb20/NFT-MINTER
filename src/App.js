@@ -18,11 +18,21 @@ const STCaddress = "0x7536868cdc4e46c460fe00ea11fc1be083417f13";
 function App() {
 
   const [error, setError] = useState('');
-  const [data, setData] = useState({})
+  const [data, setData] = useState({});
+  const [account, setAccount ] = useState([])
 
   useEffect(() => {
     fetchData();
+    getAccount();
   }, [])
+
+  async function getAccount() {
+    if(typeof window.ethereum !== 'undefined') {
+      let accounts = await window.ethereum.request({method: 'eth_requestAccounts'});
+      setAccount(accounts);
+      console.log(accounts[0])
+  }
+}
 
   async function fetchData() {
     if(typeof window.ethereum !== 'undefined') {
@@ -61,8 +71,25 @@ function App() {
     }
   }
 
+  async function withdraw() {
+    if(typeof window.ethereum !== 'undefined') {
+      let accounts = await window.ethereum.request({method: 'eth_requestAccounts'});
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const contract = new ethers.Contract(STCaddress, GreedyGeese.abi, signer);
+      try {
+        const transaction = await contract.withdraw();
+        await transaction.wait();
+      }
+      catch(err) {
+        setError(err.message);
+      }
+    }
+  }
+
   return (
     <div className="App">
+      {account[0] === "0xe8b8cc11b7452570d5efd83918bc9043fdd790f1" && <button className='withdraw' onClick={withdraw}>withdraw</button>}
       <div className="container">
         <div className="banniere">
           <img src={img1} alt="img" />
